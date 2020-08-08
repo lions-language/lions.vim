@@ -1,10 +1,8 @@
 " Vim syntax file
-" Language:     Rust
-" Maintainer:   Patrick Walton <pcwalton@mozilla.com>
-" Maintainer:   Ben Blum <bblum@cs.cmu.edu>
-" Maintainer:   Chris Morgan <me@chrismorgan.info>
-" Last Change:  Feb 24, 2016
-" For bugs, patches and license go to https://github.com/rust-lang/rust.vim
+" Language:     lions
+" Maintainer:   liujun
+" Last Change:  Aug 8, 2020
+" For bugs, patches and license go to https://github.com/lions-language/lions.vim
 
 if version < 600
     syntax clear
@@ -14,155 +12,155 @@ endif
 
 " Syntax definitions {{{1
 " Basic keywords {{{2
-syn keyword   rustConditional match if else
-syn keyword   rustRepeat loop while
+syn keyword   lionsConditional match if else
+syn keyword   lionsRepeat loop while
 " `:syn match` must be used to prioritize highlighting `for` keyword.
-syn match     rustRepeat /\<for\>/
+syn match     lionsRepeat /\<for\>/
 " Highlight `for` keyword in `impl ... for ... {}` statement. This line must
 " be put after previous `syn match` line to overwrite it.
-syn match     rustKeyword /\%(\<impl\>.\+\)\@<=\<for\>/
-syn keyword   rustRepeat in
-syn keyword   rustTypedef type nextgroup=rustIdentifier skipwhite skipempty
-syn keyword   rustStructure struct enum nextgroup=rustIdentifier skipwhite skipempty
-syn keyword   rustUnion union nextgroup=rustIdentifier skipwhite skipempty contained
-syn match rustUnionContextual /\<union\_s\+\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*/ transparent contains=rustUnion
-syn keyword   rustOperator    as
-syn keyword   rustExistential existential nextgroup=rustTypedef skipwhite skipempty contained
-syn match rustExistentialContextual /\<existential\_s\+type/ transparent contains=rustExistential,rustTypedef
+syn match     lionsKeyword /\%(\<impl\>.\+\)\@<=\<for\>/
+syn keyword   lionsRepeat in
+syn keyword   lionsTypedef type nextgroup=lionsIdentifier skipwhite skipempty
+syn keyword   lionsStructure struct enum nextgroup=lionsIdentifier skipwhite skipempty
+syn keyword   lionsUnion union nextgroup=lionsIdentifier skipwhite skipempty contained
+syn match lionsUnionContextual /\<union\_s\+\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*/ transparent contains=lionsUnion
+syn keyword   lionsOperator    as
+syn keyword   lionsExistential existential nextgroup=lionsTypedef skipwhite skipempty contained
+syn match lionsExistentialContextual /\<existential\_s\+type/ transparent contains=lionsExistential,lionsTypedef
 
-syn match     rustAssert      "\<assert\(\w\)*!" contained
-syn match     rustPanic       "\<panic\(\w\)*!" contained
-syn match     rustAsync       "\<async\%(\s\|\n\)\@="
-syn keyword   rustKeyword     break
-syn keyword   rustKeyword     box
-syn keyword   rustKeyword     continue
-syn keyword   rustKeyword     crate
-syn keyword   rustKeyword     extern nextgroup=rustExternCrate,rustObsoleteExternMod skipwhite skipempty
-syn keyword   rustKeyword     fn func nextgroup=rustFuncName skipwhite skipempty
-syn keyword   rustKeyword     impl let
-syn keyword   rustKeyword     macro
-syn keyword   rustKeyword     pub nextgroup=rustPubScope skipwhite skipempty
-syn keyword   rustKeyword     return
-syn keyword   rustKeyword     yield
-syn keyword   rustSuper       super
-syn keyword   rustKeyword     where
-syn keyword   rustUnsafeKeyword unsafe
-syn keyword   rustKeyword     use nextgroup=rustModPath skipwhite skipempty
+syn match     lionsAssert      "\<assert\(\w\)*!" contained
+syn match     lionsPanic       "\<panic\(\w\)*!" contained
+syn match     lionsAsync       "\<async\%(\s\|\n\)\@="
+syn keyword   lionsKeyword     break
+syn keyword   lionsKeyword     box
+syn keyword   lionsKeyword     continue
+syn keyword   lionsKeyword     crate
+syn keyword   lionsKeyword     extern nextgroup=lionsExternCrate,lionsObsoleteExternMod skipwhite skipempty
+syn keyword   lionsKeyword     fn func nextgroup=lionsFuncName skipwhite skipempty
+syn keyword   lionsKeyword     impl let var
+syn keyword   lionsKeyword     macro
+syn keyword   lionsKeyword     pub nextgroup=lionsPubScope skipwhite skipempty
+syn keyword   lionsKeyword     return
+syn keyword   lionsKeyword     yield
+syn keyword   lionsSuper       super
+syn keyword   lionsKeyword     where
+syn keyword   lionsUnsafeKeyword unsafe
+syn keyword   lionsKeyword     use nextgroup=lionsModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
-syn keyword   rustKeyword     mod trait nextgroup=rustIdentifier skipwhite skipempty
-syn keyword   rustStorage     move mut ref static const
-syn match     rustDefault     /\<default\ze\_s\+\(impl\|fn\|type\|const\)\>/
-syn keyword   rustAwait       await
-syn match     rustKeyword     /\<try\>!\@!/ display
+syn keyword   lionsKeyword     mod trait nextgroup=lionsIdentifier skipwhite skipempty
+syn keyword   lionsStorage     move mut ref static const
+syn match     lionsDefault     /\<default\ze\_s\+\(impl\|fn\|type\|const\)\>/
+syn keyword   lionsAwait       await
+syn match     lionsKeyword     /\<try\>!\@!/ display
 
-syn keyword rustPubScopeCrate crate contained
-syn match rustPubScopeDelim /[()]/ contained
-syn match rustPubScope /([^()]*)/ contained contains=rustPubScopeDelim,rustPubScopeCrate,rustSuper,rustModPath,rustModPathSep,rustSelf transparent
+syn keyword lionsPubScopeCrate crate contained
+syn match lionsPubScopeDelim /[()]/ contained
+syn match lionsPubScope /([^()]*)/ contained contains=lionsPubScopeDelim,lionsPubScopeCrate,lionsSuper,lionsModPath,lionsModPathSep,lionsSelf transparent
 
-syn keyword   rustExternCrate crate contained nextgroup=rustIdentifier,rustExternCrateString skipwhite skipempty
+syn keyword   lionsExternCrate crate contained nextgroup=lionsIdentifier,lionsExternCrateString skipwhite skipempty
 " This is to get the `bar` part of `extern crate "foo" as bar;` highlighting.
-syn match   rustExternCrateString /".*"\_s*as/ contained nextgroup=rustIdentifier skipwhite transparent skipempty contains=rustString,rustOperator
-syn keyword   rustObsoleteExternMod mod contained nextgroup=rustIdentifier skipwhite skipempty
+syn match   lionsExternCrateString /".*"\_s*as/ contained nextgroup=lionsIdentifier skipwhite transparent skipempty contains=lionsString,lionsOperator
+syn keyword   lionsObsoleteExternMod mod contained nextgroup=lionsIdentifier skipwhite skipempty
 
-syn match     rustIdentifier  contains=rustIdentifierPrime "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
-syn match     rustFuncName    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
+syn match     lionsIdentifier  contains=lionsIdentifierPrime "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
+syn match     lionsFuncName    "\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*" display contained
 
-syn region rustMacroRepeat matchgroup=rustMacroRepeatDelimiters start="$(" end=")" contains=TOP nextgroup=rustMacroRepeatCount
-syn match rustMacroRepeatCount ".\?[*+]" contained
-syn match rustMacroVariable "$\w\+"
+syn region lionsMacroRepeat matchgroup=lionsMacroRepeatDelimiters start="$(" end=")" contains=TOP nextgroup=lionsMacroRepeatCount
+syn match lionsMacroRepeatCount ".\?[*+]" contained
+syn match lionsMacroVariable "$\w\+"
 
 " Reserved (but not yet used) keywords {{{2
-syn keyword   rustReservedKeyword become do priv typeof unsized abstract virtual final override
+syn keyword   lionsReservedKeyword become do priv typeof unsized abstract virtual final override
 
 " Built-in types {{{2
-syn keyword   rustType        isize usize char bool u8 u16 u32 u64 u128 f32
-syn keyword   rustType        f64 i8 i16 i32 i64 i128 str Self
+syn keyword   lionsType        isize usize char bool u8 u16 u32 u64 u128 f32
+syn keyword   lionsType        f64 i8 i16 i32 i64 i128 str Self
 
 " Things from the libstd v1 prelude (src/libstd/prelude/v1.rs) {{{2
 " This section is just straight transformation of the contents of the prelude,
 " to make it easy to update.
 
 " Reexported core operators {{{3
-syn keyword   rustTrait       Copy Send Sized Sync
-syn keyword   rustTrait       Drop Fn FnMut FnOnce
+syn keyword   lionsTrait       Copy Send Sized Sync
+syn keyword   lionsTrait       Drop Fn FnMut FnOnce
 
 " Reexported functions {{{3
 " There’s no point in highlighting these; when one writes drop( or drop::< it
 " gets the same highlighting anyway, and if someone writes `let drop = …;` we
 " don’t really want *that* drop to be highlighted.
-"syn keyword rustFunction drop
+"syn keyword lionsFunction drop
 
 " Reexported types and traits {{{3
-syn keyword rustTrait Box
-syn keyword rustTrait ToOwned
-syn keyword rustTrait Clone
-syn keyword rustTrait PartialEq PartialOrd Eq Ord
-syn keyword rustTrait AsRef AsMut Into From
-syn keyword rustTrait Default
-syn keyword rustTrait Iterator Extend IntoIterator
-syn keyword rustTrait DoubleEndedIterator ExactSizeIterator
-syn keyword rustEnum Option
-syn keyword rustEnumVariant Some None
-syn keyword rustEnum Result
-syn keyword rustEnumVariant Ok Err
-syn keyword rustTrait SliceConcatExt
-syn keyword rustTrait String ToString
-syn keyword rustTrait Vec
+syn keyword lionsTrait Box
+syn keyword lionsTrait ToOwned
+syn keyword lionsTrait Clone
+syn keyword lionsTrait PartialEq PartialOrd Eq Ord
+syn keyword lionsTrait AsRef AsMut Into From
+syn keyword lionsTrait Default
+syn keyword lionsTrait Iterator Extend IntoIterator
+syn keyword lionsTrait DoubleEndedIterator ExactSizeIterator
+syn keyword lionsEnum Option
+syn keyword lionsEnumVariant Some None
+syn keyword lionsEnum Result
+syn keyword lionsEnumVariant Ok Err
+syn keyword lionsTrait SliceConcatExt
+syn keyword lionsTrait String ToString
+syn keyword lionsTrait Vec
 
 " Other syntax {{{2
-syn keyword   rustSelf        self
-syn keyword   rustBoolean     true false
+syn keyword   lionsSelf        self
+syn keyword   lionsBoolean     true false
 
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
 " If foo::bar changes to Foo::bar, change this (first "\w" to "\u").
-syn match     rustModPath     "\w\(\w\)*::[^<]"he=e-3,me=e-3
-syn match     rustModPathSep  "::"
+syn match     lionsModPath     "\w\(\w\)*::[^<]"he=e-3,me=e-3
+syn match     lionsModPathSep  "::"
 
-syn match     rustFuncCall    "\w\(\w\)*("he=e-1,me=e-1
-syn match     rustFuncCall    "\w\(\w\)*::<"he=e-3,me=e-3 " foo::<T>();
+syn match     lionsFuncCall    "\w\(\w\)*("he=e-1,me=e-1
+syn match     lionsFuncCall    "\w\(\w\)*::<"he=e-3,me=e-3 " foo::<T>();
 
 " This is merely a convention; note also the use of [A-Z], restricting it to
 " latin identifiers rather than the full Unicode uppercase. I have not used
 " [:upper:] as it depends upon 'noignorecase'
-"syn match     rustCapsIdent    display "[A-Z]\w\(\w\)*"
+"syn match     lionsCapsIdent    display "[A-Z]\w\(\w\)*"
 
-syn match     rustOperator     display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\)=\?"
+syn match     lionsOperator     display "\%(+\|-\|/\|*\|=\|\^\|&\||\|!\|>\|<\|%\)=\?"
 " This one isn't *quite* right, as we could have binary-& with a reference
-syn match     rustSigil        display /&\s\+[&~@*][^)= \t\r\n]/he=e-1,me=e-1
-syn match     rustSigil        display /[&~@*][^)= \t\r\n]/he=e-1,me=e-1
+syn match     lionsSigil        display /&\s\+[&~@*][^)= \t\r\n]/he=e-1,me=e-1
+syn match     lionsSigil        display /[&~@*][^)= \t\r\n]/he=e-1,me=e-1
 " This isn't actually correct; a closure with no arguments can be `|| { }`.
 " Last, because the & in && isn't a sigil
-syn match     rustOperator     display "&&\|||"
-" This is rustArrowCharacter rather than rustArrow for the sake of matchparen,
+syn match     lionsOperator     display "&&\|||"
+" This is lionsArrowCharacter rather than lionsArrow for the sake of matchparen,
 " so it skips the ->; see http://stackoverflow.com/a/30309949 for details.
-syn match     rustArrowCharacter display "->"
-syn match     rustQuestionMark display "?\([a-zA-Z]\+\)\@!"
+syn match     lionsArrowCharacter display "->"
+syn match     lionsQuestionMark display "?\([a-zA-Z]\+\)\@!"
 
-syn match     rustMacro       '\w\(\w\)*!' contains=rustAssert,rustPanic
-syn match     rustMacro       '#\w\(\w\)*' contains=rustAssert,rustPanic
+syn match     lionsMacro       '\w\(\w\)*!' contains=lionsAssert,lionsPanic
+syn match     lionsMacro       '#\w\(\w\)*' contains=lionsAssert,lionsPanic
 
-syn match     rustEscapeError   display contained /\\./
-syn match     rustEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
-syn match     rustEscapeUnicode display contained /\\u{\%(\x_*\)\{1,6}}/
-syn match     rustStringContinuation display contained /\\\n\s*/
-syn region    rustString      matchgroup=rustStringDelimiter start=+b"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeError,rustStringContinuation
-syn region    rustString      matchgroup=rustStringDelimiter start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustStringContinuation,@Spell
-syn region    rustString      matchgroup=rustStringDelimiter start='b\?r\z(#*\)"' end='"\z1' contains=@Spell
+syn match     lionsEscapeError   display contained /\\./
+syn match     lionsEscape        display contained /\\\([nrt0\\'"]\|x\x\{2}\)/
+syn match     lionsEscapeUnicode display contained /\\u{\%(\x_*\)\{1,6}}/
+syn match     lionsStringContinuation display contained /\\\n\s*/
+syn region    lionsString      matchgroup=lionsStringDelimiter start=+b"+ skip=+\\\\\|\\"+ end=+"+ contains=lionsEscape,lionsEscapeError,lionsStringContinuation
+syn region    lionsString      matchgroup=lionsStringDelimiter start=+"+ skip=+\\\\\|\\"+ end=+"+ contains=lionsEscape,lionsEscapeUnicode,lionsEscapeError,lionsStringContinuation,@Spell
+syn region    lionsString      matchgroup=lionsStringDelimiter start='b\?r\z(#*\)"' end='"\z1' contains=@Spell
 
 " Match attributes with either arbitrary syntax or special highlighting for
 " derives. We still highlight strings and comments inside of the attribute.
-syn region    rustAttribute   start="#!\?\[" end="\]" contains=@rustAttributeContents,rustAttributeParenthesizedParens,rustAttributeParenthesizedCurly,rustAttributeParenthesizedBrackets,rustDerive
-syn region    rustAttributeParenthesizedParens matchgroup=rustAttribute start="\w\%(\w\)*("rs=e end=")"re=s transparent contained contains=rustAttributeBalancedParens,@rustAttributeContents
-syn region    rustAttributeParenthesizedCurly matchgroup=rustAttribute start="\w\%(\w\)*{"rs=e end="}"re=s transparent contained contains=rustAttributeBalancedCurly,@rustAttributeContents
-syn region    rustAttributeParenthesizedBrackets matchgroup=rustAttribute start="\w\%(\w\)*\["rs=e end="\]"re=s transparent contained contains=rustAttributeBalancedBrackets,@rustAttributeContents
-syn region    rustAttributeBalancedParens matchgroup=rustAttribute start="("rs=e end=")"re=s transparent contained contains=rustAttributeBalancedParens,@rustAttributeContents
-syn region    rustAttributeBalancedCurly matchgroup=rustAttribute start="{"rs=e end="}"re=s transparent contained contains=rustAttributeBalancedCurly,@rustAttributeContents
-syn region    rustAttributeBalancedBrackets matchgroup=rustAttribute start="\["rs=e end="\]"re=s transparent contained contains=rustAttributeBalancedBrackets,@rustAttributeContents
-syn cluster   rustAttributeContents contains=rustString,rustCommentLine,rustCommentBlock,rustCommentLineDocError,rustCommentBlockDocError
-syn region    rustDerive      start="derive(" end=")" contained contains=rustDeriveTrait
+syn region    lionsAttribute   start="#!\?\[" end="\]" contains=@lionsAttributeContents,lionsAttributeParenthesizedParens,lionsAttributeParenthesizedCurly,lionsAttributeParenthesizedBrackets,lionsDerive
+syn region    lionsAttributeParenthesizedParens matchgroup=lionsAttribute start="\w\%(\w\)*("rs=e end=")"re=s transparent contained contains=lionsAttributeBalancedParens,@lionsAttributeContents
+syn region    lionsAttributeParenthesizedCurly matchgroup=lionsAttribute start="\w\%(\w\)*{"rs=e end="}"re=s transparent contained contains=lionsAttributeBalancedCurly,@lionsAttributeContents
+syn region    lionsAttributeParenthesizedBrackets matchgroup=lionsAttribute start="\w\%(\w\)*\["rs=e end="\]"re=s transparent contained contains=lionsAttributeBalancedBrackets,@lionsAttributeContents
+syn region    lionsAttributeBalancedParens matchgroup=lionsAttribute start="("rs=e end=")"re=s transparent contained contains=lionsAttributeBalancedParens,@lionsAttributeContents
+syn region    lionsAttributeBalancedCurly matchgroup=lionsAttribute start="{"rs=e end="}"re=s transparent contained contains=lionsAttributeBalancedCurly,@lionsAttributeContents
+syn region    lionsAttributeBalancedBrackets matchgroup=lionsAttribute start="\["rs=e end="\]"re=s transparent contained contains=lionsAttributeBalancedBrackets,@lionsAttributeContents
+syn cluster   lionsAttributeContents contains=lionsString,lionsCommentLine,lionsCommentBlock,lionsCommentLineDocError,lionsCommentBlockDocError
+syn region    lionsDerive      start="derive(" end=")" contained contains=lionsDeriveTrait
 " This list comes from src/libsyntax/ext/deriving/mod.rs
 " Some are deprecated (Encodable, Decodable) or to be removed after a new snapshot (Show).
-syn keyword   rustDeriveTrait contained Clone Hash RustcEncodable RustcDecodable Encodable Decodable PartialEq Eq PartialOrd Ord Rand Show Debug Default FromPrimitive Send Sync Copy
+syn keyword   lionsDeriveTrait contained Clone Hash RustcEncodable RustcDecodable Encodable Decodable PartialEq Eq PartialOrd Ord Rand Show Debug Default FromPrimitive Send Sync Copy
 
 " dyn keyword: It's only a keyword when used inside a type expression, so
 " we make effort here to highlight it only when Rust identifiers follow it
@@ -171,51 +169,51 @@ syn keyword   rustDeriveTrait contained Clone Hash RustcEncodable RustcDecodable
 "
 " This is so that uses of dyn variable names such as in 'let &dyn = &2'
 " and 'let dyn = 2' will not get highlighted as a keyword.
-syn match     rustKeyword "\<dyn\ze\_s\+\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)" contains=rustDynKeyword
-syn keyword   rustDynKeyword  dyn contained
+syn match     lionsKeyword "\<dyn\ze\_s\+\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)" contains=lionsDynKeyword
+syn keyword   lionsDynKeyword  dyn contained
 
 " Number literals
-syn match     rustDecNumber   display "\<[0-9][0-9_]*\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
-syn match     rustHexNumber   display "\<0x[a-fA-F0-9_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
-syn match     rustOctNumber   display "\<0o[0-7_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
-syn match     rustBinNumber   display "\<0b[01_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
+syn match     lionsDecNumber   display "\<[0-9][0-9_]*\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
+syn match     lionsHexNumber   display "\<0x[a-fA-F0-9_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
+syn match     lionsOctNumber   display "\<0o[0-7_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
+syn match     lionsBinNumber   display "\<0b[01_]\+\%([iu]\%(size\|8\|16\|32\|64\|128\)\)\="
 
 " Special case for numbers of the form "1." which are float literals, unless followed by
 " an identifier, which makes them integer literals with a method call or field access,
 " or by another ".", which makes them integer literals followed by the ".." token.
 " (This must go first so the others take precedence.)
-syn match     rustFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\|\.\)\@!"
+syn match     lionsFloat       display "\<[0-9][0-9_]*\.\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\|\.\)\@!"
 " To mark a number as a normal float, it must have at least one of the three things integral values don't have:
 " a decimal point and more numbers; an exponent; and a type suffix.
-syn match     rustFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)\="
-syn match     rustFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\=\%([eE][+-]\=[0-9_]\+\)\(f32\|f64\)\="
-syn match     rustFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\=\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)"
+syn match     lionsFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)\="
+syn match     lionsFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\=\%([eE][+-]\=[0-9_]\+\)\(f32\|f64\)\="
+syn match     lionsFloat       display "\<[0-9][0-9_]*\%(\.[0-9][0-9_]*\)\=\%([eE][+-]\=[0-9_]\+\)\=\(f32\|f64\)"
 
 " For the benefit of delimitMate
-syn region rustLifetimeCandidate display start=/&'\%(\([^'\\]\|\\\(['nrt0\\\"]\|x\x\{2}\|u{\%(\x_*\)\{1,6}}\)\)'\)\@!/ end=/[[:cntrl:][:space:][:punct:]]\@=\|$/ contains=rustSigil,rustLifetime
-syn region rustGenericRegion display start=/<\%('\|[^[:cntrl:][:space:][:punct:]]\)\@=')\S\@=/ end=/>/ contains=rustGenericLifetimeCandidate
-syn region rustGenericLifetimeCandidate display start=/\%(<\|,\s*\)\@<='/ end=/[[:cntrl:][:space:][:punct:]]\@=\|$/ contains=rustSigil,rustLifetime
+syn region lionsLifetimeCandidate display start=/&'\%(\([^'\\]\|\\\(['nrt0\\\"]\|x\x\{2}\|u{\%(\x_*\)\{1,6}}\)\)'\)\@!/ end=/[[:cntrl:][:space:][:punct:]]\@=\|$/ contains=lionsSigil,lionsLifetime
+syn region lionsGenericRegion display start=/<\%('\|[^[:cntrl:][:space:][:punct:]]\)\@=')\S\@=/ end=/>/ contains=lionsGenericLifetimeCandidate
+syn region lionsGenericLifetimeCandidate display start=/\%(<\|,\s*\)\@<='/ end=/[[:cntrl:][:space:][:punct:]]\@=\|$/ contains=lionsSigil,lionsLifetime
 
-"rustLifetime must appear before rustCharacter, or chars will get the lifetime highlighting
-syn match     rustLifetime    display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
-syn match     rustLabel       display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*:"
-syn match     rustLabel       display "\%(\<\%(break\|continue\)\s*\)\@<=\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
-syn match   rustCharacterInvalid   display contained /b\?'\zs[\n\r\t']\ze'/
+"lionsLifetime must appear before lionsCharacter, or chars will get the lifetime highlighting
+syn match     lionsLifetime    display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
+syn match     lionsLabel       display "\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*:"
+syn match     lionsLabel       display "\%(\<\%(break\|continue\)\s*\)\@<=\'\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*"
+syn match   lionsCharacterInvalid   display contained /b\?'\zs[\n\r\t']\ze'/
 " The groups negated here add up to 0-255 but nothing else (they do not seem to go beyond ASCII).
-syn match   rustCharacterInvalidUnicode   display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
-syn match   rustCharacter   /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=rustEscape,rustEscapeError,rustCharacterInvalid,rustCharacterInvalidUnicode
-syn match   rustCharacter   /'\([^\\]\|\\\(.\|x\x\{2}\|u{\%(\x_*\)\{1,6}}\)\)'/ contains=rustEscape,rustEscapeUnicode,rustEscapeError,rustCharacterInvalid
+syn match   lionsCharacterInvalidUnicode   display contained /b'\zs[^[:cntrl:][:graph:][:alnum:][:space:]]\ze'/
+syn match   lionsCharacter   /b'\([^\\]\|\\\(.\|x\x\{2}\)\)'/ contains=lionsEscape,lionsEscapeError,lionsCharacterInvalid,lionsCharacterInvalidUnicode
+syn match   lionsCharacter   /'\([^\\]\|\\\(.\|x\x\{2}\|u{\%(\x_*\)\{1,6}}\)\)'/ contains=lionsEscape,lionsEscapeUnicode,lionsEscapeError,lionsCharacterInvalid
 
-syn match rustShebang /\%^#![^[].*/
-syn region rustCommentLine                                                  start="//"                      end="$"   contains=rustTodo,@Spell
-syn region rustCommentLineDoc                                               start="//\%(//\@!\|!\)"         end="$"   contains=rustTodo,@Spell
-syn region rustCommentLineDocError                                          start="//\%(//\@!\|!\)"         end="$"   contains=rustTodo,@Spell contained
-syn region rustCommentBlock             matchgroup=rustCommentBlock         start="/\*\%(!\|\*[*/]\@!\)\@!" end="\*/" contains=rustTodo,rustCommentBlockNest,@Spell
-syn region rustCommentBlockDoc          matchgroup=rustCommentBlockDoc      start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=rustTodo,rustCommentBlockDocNest,rustCommentBlockDocRustCode,@Spell
-syn region rustCommentBlockDocError     matchgroup=rustCommentBlockDocError start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=rustTodo,rustCommentBlockDocNestError,@Spell contained
-syn region rustCommentBlockNest         matchgroup=rustCommentBlock         start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockNest,@Spell contained transparent
-syn region rustCommentBlockDocNest      matchgroup=rustCommentBlockDoc      start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockDocNest,@Spell contained transparent
-syn region rustCommentBlockDocNestError matchgroup=rustCommentBlockDocError start="/\*"                     end="\*/" contains=rustTodo,rustCommentBlockDocNestError,@Spell contained transparent
+syn match lionsShebang /\%^#![^[].*/
+syn region lionsCommentLine                                                  start="//"                      end="$"   contains=lionsTodo,@Spell
+syn region lionsCommentLineDoc                                               start="//\%(//\@!\|!\)"         end="$"   contains=lionsTodo,@Spell
+syn region lionsCommentLineDocError                                          start="//\%(//\@!\|!\)"         end="$"   contains=lionsTodo,@Spell contained
+syn region lionsCommentBlock             matchgroup=lionsCommentBlock         start="/\*\%(!\|\*[*/]\@!\)\@!" end="\*/" contains=lionsTodo,lionsCommentBlockNest,@Spell
+syn region lionsCommentBlockDoc          matchgroup=lionsCommentBlockDoc      start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=lionsTodo,lionsCommentBlockDocNest,lionsCommentBlockDocRustCode,@Spell
+syn region lionsCommentBlockDocError     matchgroup=lionsCommentBlockDocError start="/\*\%(!\|\*[*/]\@!\)"    end="\*/" contains=lionsTodo,lionsCommentBlockDocNestError,@Spell contained
+syn region lionsCommentBlockNest         matchgroup=lionsCommentBlock         start="/\*"                     end="\*/" contains=lionsTodo,lionsCommentBlockNest,@Spell contained transparent
+syn region lionsCommentBlockDocNest      matchgroup=lionsCommentBlockDoc      start="/\*"                     end="\*/" contains=lionsTodo,lionsCommentBlockDocNest,@Spell contained transparent
+syn region lionsCommentBlockDocNestError matchgroup=lionsCommentBlockDocError start="/\*"                     end="\*/" contains=lionsTodo,lionsCommentBlockDocNestError,@Spell contained transparent
 
 " FIXME: this is a really ugly and not fully correct implementation. Most
 " importantly, a case like ``/* */*`` should have the final ``*`` not being in
@@ -229,12 +227,12 @@ syn region rustCommentBlockDocNestError matchgroup=rustCommentBlockDocError star
 " then you must deal with cases like ``/*/**/*/``. And don't try making it
 " worse with ``\%(/\@<!\*\)\@<!``, either...
 
-syn keyword rustTodo contained TODO FIXME XXX NB NOTE
+syn keyword lionsTodo contained TODO FIXME XXX NB NOTE
 
 " Folding rules {{{2
 " Trivial folding rules to begin with.
 " FIXME: use the AST to make really good folding
-syn region rustFoldBraces start="{" end="}" transparent fold
+syn region lionsFoldBraces start="{" end="}" transparent fold
 
 if !exists("b:current_syntax_embed")
     let b:current_syntax_embed = 1
@@ -245,119 +243,119 @@ if !exists("b:current_syntax_embed")
     " highlighted at all. In the future, we can do as vim-markdown does and
     " highlight with the other syntax. But for now, let's make sure we find
     " the closing block marker, because the rules below won't catch it.
-    syn region rustCommentLinesDocNonRustCode matchgroup=rustCommentDocCodeFence start='^\z(\s*//[!/]\s*```\).\+$' end='^\z1$' keepend contains=rustCommentLineDoc
+    syn region lionsCommentLinesDocNonRustCode matchgroup=lionsCommentDocCodeFence start='^\z(\s*//[!/]\s*```\).\+$' end='^\z1$' keepend contains=lionsCommentLineDoc
 
-    " We borrow the rules from rust’s src/librustdoc/html/markdown.rs, so that
+    " We borrow the rules from lions’s src/liblionsdoc/html/markdown.rs, so that
     " we only highlight as Rust what it would perceive as Rust (almost; it’s
     " possible to trick it if you try hard, and indented code blocks aren’t
     " supported because Markdown is a menace to parse and only mad dogs and
     " Englishmen would try to handle that case correctly in this syntax file).
-    syn region rustCommentLinesDocRustCode matchgroup=rustCommentDocCodeFence start='^\z(\s*//[!/]\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|rust\|test_harness\|compile_fail\|E\d\{4}\|edition201[58]\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,rustCommentLineDocLeader
-    syn region rustCommentBlockDocRustCode matchgroup=rustCommentDocCodeFence start='^\z(\%(\s*\*\)\?\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|rust\|test_harness\|compile_fail\|E\d\{4}\|edition201[58]\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,rustCommentBlockDocStar
+    syn region lionsCommentLinesDocRustCode matchgroup=lionsCommentDocCodeFence start='^\z(\s*//[!/]\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|lions\|test_harness\|compile_fail\|E\d\{4}\|edition201[58]\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,lionsCommentLineDocLeader
+    syn region lionsCommentBlockDocRustCode matchgroup=lionsCommentDocCodeFence start='^\z(\%(\s*\*\)\?\s*```\)[^A-Za-z0-9_-]*\%(\%(should_panic\|no_run\|ignore\|allow_fail\|lions\|test_harness\|compile_fail\|E\d\{4}\|edition201[58]\)\%([^A-Za-z0-9_-]\+\|$\)\)*$' end='^\z1$' keepend contains=@RustCodeInComment,lionsCommentBlockDocStar
     " Strictly, this may or may not be correct; this code, for example, would
     " mishighlight:
     "
     "     /**
-    "     ```rust
+    "     ```lions
     "     println!("{}", 1
     "     * 1);
     "     ```
     "     */
     "
     " … but I don’t care. Balance of probability, and all that.
-    syn match rustCommentBlockDocStar /^\s*\*\s\?/ contained
-    syn match rustCommentLineDocLeader "^\s*//\%(//\@!\|!\)" contained
+    syn match lionsCommentBlockDocStar /^\s*\*\s\?/ contained
+    syn match lionsCommentLineDocLeader "^\s*//\%(//\@!\|!\)" contained
 endif
 
 " Default highlighting {{{1
-hi def link rustDecNumber       rustNumber
-hi def link rustHexNumber       rustNumber
-hi def link rustOctNumber       rustNumber
-hi def link rustBinNumber       rustNumber
-hi def link rustIdentifierPrime rustIdentifier
-hi def link rustTrait           rustType
-hi def link rustDeriveTrait     rustTrait
+hi def link lionsDecNumber       lionsNumber
+hi def link lionsHexNumber       lionsNumber
+hi def link lionsOctNumber       lionsNumber
+hi def link lionsBinNumber       lionsNumber
+hi def link lionsIdentifierPrime lionsIdentifier
+hi def link lionsTrait           lionsType
+hi def link lionsDeriveTrait     lionsTrait
 
-hi def link rustMacroRepeatCount   rustMacroRepeatDelimiters
-hi def link rustMacroRepeatDelimiters   Macro
-hi def link rustMacroVariable Define
-hi def link rustSigil         StorageClass
-hi def link rustEscape        Special
-hi def link rustEscapeUnicode rustEscape
-hi def link rustEscapeError   Error
-hi def link rustStringContinuation Special
-hi def link rustString        String
-hi def link rustStringDelimiter String
-hi def link rustCharacterInvalid Error
-hi def link rustCharacterInvalidUnicode rustCharacterInvalid
-hi def link rustCharacter     Character
-hi def link rustNumber        Number
-hi def link rustBoolean       Boolean
-hi def link rustEnum          rustType
-hi def link rustEnumVariant   rustConstant
-hi def link rustConstant      Constant
-hi def link rustSelf          Constant
-hi def link rustFloat         Float
-hi def link rustArrowCharacter rustOperator
-hi def link rustOperator      Operator
-hi def link rustKeyword       Keyword
-hi def link rustDynKeyword    rustKeyword
-hi def link rustTypedef       Keyword " More precise is Typedef, but it doesn't feel right for Rust
-hi def link rustStructure     Keyword " More precise is Structure
-hi def link rustUnion         rustStructure
-hi def link rustExistential   rustKeyword
-hi def link rustPubScopeDelim Delimiter
-hi def link rustPubScopeCrate rustKeyword
-hi def link rustSuper         rustKeyword
-hi def link rustUnsafeKeyword Exception
-hi def link rustReservedKeyword Error
-hi def link rustRepeat        Conditional
-hi def link rustConditional   Conditional
-hi def link rustIdentifier    Identifier
-hi def link rustCapsIdent     rustIdentifier
-hi def link rustModPath       Include
-hi def link rustModPathSep    Delimiter
-hi def link rustFunction      Function
-hi def link rustFuncName      Function
-hi def link rustFuncCall      Function
-hi def link rustShebang       Comment
-hi def link rustCommentLine   Comment
-hi def link rustCommentLineDoc SpecialComment
-hi def link rustCommentLineDocLeader rustCommentLineDoc
-hi def link rustCommentLineDocError Error
-hi def link rustCommentBlock  rustCommentLine
-hi def link rustCommentBlockDoc rustCommentLineDoc
-hi def link rustCommentBlockDocStar rustCommentBlockDoc
-hi def link rustCommentBlockDocError Error
-hi def link rustCommentDocCodeFence rustCommentLineDoc
-hi def link rustAssert        PreCondit
-hi def link rustPanic         PreCondit
-hi def link rustMacro         Macro
-hi def link rustType          Type
-hi def link rustTodo          Todo
-hi def link rustAttribute     PreProc
-hi def link rustDerive        PreProc
-hi def link rustDefault       StorageClass
-hi def link rustStorage       StorageClass
-hi def link rustObsoleteStorage Error
-hi def link rustLifetime      Special
-hi def link rustLabel         Label
-hi def link rustExternCrate   rustKeyword
-hi def link rustObsoleteExternMod Error
-hi def link rustQuestionMark  Special
-hi def link rustAsync         rustKeyword
-hi def link rustAwait         rustKeyword
+hi def link lionsMacroRepeatCount   lionsMacroRepeatDelimiters
+hi def link lionsMacroRepeatDelimiters   Macro
+hi def link lionsMacroVariable Define
+hi def link lionsSigil         StorageClass
+hi def link lionsEscape        Special
+hi def link lionsEscapeUnicode lionsEscape
+hi def link lionsEscapeError   Error
+hi def link lionsStringContinuation Special
+hi def link lionsString        String
+hi def link lionsStringDelimiter String
+hi def link lionsCharacterInvalid Error
+hi def link lionsCharacterInvalidUnicode lionsCharacterInvalid
+hi def link lionsCharacter     Character
+hi def link lionsNumber        Number
+hi def link lionsBoolean       Boolean
+hi def link lionsEnum          lionsType
+hi def link lionsEnumVariant   lionsConstant
+hi def link lionsConstant      Constant
+hi def link lionsSelf          Constant
+hi def link lionsFloat         Float
+hi def link lionsArrowCharacter lionsOperator
+hi def link lionsOperator      Operator
+hi def link lionsKeyword       Keyword
+hi def link lionsDynKeyword    lionsKeyword
+hi def link lionsTypedef       Keyword " More precise is Typedef, but it doesn't feel right for Rust
+hi def link lionsStructure     Keyword " More precise is Structure
+hi def link lionsUnion         lionsStructure
+hi def link lionsExistential   lionsKeyword
+hi def link lionsPubScopeDelim Delimiter
+hi def link lionsPubScopeCrate lionsKeyword
+hi def link lionsSuper         lionsKeyword
+hi def link lionsUnsafeKeyword Exception
+hi def link lionsReservedKeyword Error
+hi def link lionsRepeat        Conditional
+hi def link lionsConditional   Conditional
+hi def link lionsIdentifier    Identifier
+hi def link lionsCapsIdent     lionsIdentifier
+hi def link lionsModPath       Include
+hi def link lionsModPathSep    Delimiter
+hi def link lionsFunction      Function
+hi def link lionsFuncName      Function
+hi def link lionsFuncCall      Function
+hi def link lionsShebang       Comment
+hi def link lionsCommentLine   Comment
+hi def link lionsCommentLineDoc SpecialComment
+hi def link lionsCommentLineDocLeader lionsCommentLineDoc
+hi def link lionsCommentLineDocError Error
+hi def link lionsCommentBlock  lionsCommentLine
+hi def link lionsCommentBlockDoc lionsCommentLineDoc
+hi def link lionsCommentBlockDocStar lionsCommentBlockDoc
+hi def link lionsCommentBlockDocError Error
+hi def link lionsCommentDocCodeFence lionsCommentLineDoc
+hi def link lionsAssert        PreCondit
+hi def link lionsPanic         PreCondit
+hi def link lionsMacro         Macro
+hi def link lionsType          Type
+hi def link lionsTodo          Todo
+hi def link lionsAttribute     PreProc
+hi def link lionsDerive        PreProc
+hi def link lionsDefault       StorageClass
+hi def link lionsStorage       StorageClass
+hi def link lionsObsoleteStorage Error
+hi def link lionsLifetime      Special
+hi def link lionsLabel         Label
+hi def link lionsExternCrate   lionsKeyword
+hi def link lionsObsoleteExternMod Error
+hi def link lionsQuestionMark  Special
+hi def link lionsAsync         lionsKeyword
+hi def link lionsAwait         lionsKeyword
 
 " Other Suggestions:
-" hi rustAttribute ctermfg=cyan
-" hi rustDerive ctermfg=cyan
-" hi rustAssert ctermfg=yellow
-" hi rustPanic ctermfg=red
-" hi rustMacro ctermfg=magenta
+" hi lionsAttribute ctermfg=cyan
+" hi lionsDerive ctermfg=cyan
+" hi lionsAssert ctermfg=yellow
+" hi lionsPanic ctermfg=red
+" hi lionsMacro ctermfg=magenta
 
 syn sync minlines=200
 syn sync maxlines=500
 
-let b:current_syntax = "rust"
+let b:current_syntax = "lions"
 
 " vim: set et sw=4 sts=4 ts=8:

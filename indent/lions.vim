@@ -1,8 +1,8 @@
 " Vim indent file
-" Language:         Rust
-" Author:           Chris Morgan <me@chrismorgan.info>
-" Last Change:      2018 Jan 10
-" For bugs, patches and license go to https://github.com/rust-lang/rust.vim
+" Language:         lions
+" Author:           liujun
+" Last Change:      2020 Aug 8
+" For bugs, patches and license go to https://github.com/lions-language/lions.vim
 
 " Only load this indent file when no other was loaded.
 if exists("b:did_indent")
@@ -71,7 +71,7 @@ function! s:is_string_comment(lnum, col)
     if has('syntax_items')
         for id in synstack(a:lnum, a:col)
             let synname = synIDattr(id, "name")
-            if synname ==# "rustString" || synname =~# "^rustComment"
+            if synname ==# "lionsString" || synname =~# "^lionsComment"
                 return 1
             endif
         endfor
@@ -99,7 +99,7 @@ function GetRustIndent(lnum)
 
     if has('syntax_items')
         let synname = synIDattr(synID(a:lnum, 1, 1), "name")
-        if synname ==# "rustString"
+        if synname ==# "lionsString"
             " If the start of the line is in a string, don't change the indent
             return -1
         elseif synname =~? '\(Comment\|Todo\)'
