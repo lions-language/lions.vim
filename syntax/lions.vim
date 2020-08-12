@@ -108,6 +108,7 @@ syn keyword lionsTrait String ToString
 syn keyword lionsTrait Vec
 
 " Other syntax {{{2
+syn keyword   lionsStrfmt      strfmt
 syn keyword   lionsSelf        self
 syn keyword   lionsBoolean     true false
 
@@ -295,6 +296,7 @@ hi def link lionsEnum          lionsType
 hi def link lionsEnumVariant   lionsConstant
 hi def link lionsConstant      Constant
 hi def link lionsSelf          Constant
+hi def link lionsStrfmt        Constant
 hi def link lionsFloat         Float
 hi def link lionsArrowCharacter lionsOperator
 hi def link lionsOperator      Operator
