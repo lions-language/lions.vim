@@ -44,6 +44,7 @@ syn keyword   lionsKeyword     return
 syn keyword   lionsKeyword     yield
 syn keyword   lionsSuper       super
 syn keyword   lionsKeyword     where
+syn keyword   lionsKeyword     import package
 syn keyword   lionsUnsafeKeyword unsafe
 syn keyword   lionsKeyword     use nextgroup=lionsModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
@@ -109,7 +110,7 @@ syn keyword lionsTrait Vec
 
 " Other syntax {{{2
 syn keyword   lionsStrfmt      strfmt
-syn keyword   lionsSelf        self
+syn keyword   lionsSelf        self this
 syn keyword   lionsBoolean     true false
 
 " If foo::bar changes to foo.bar, change this ("::" to "\.").
