@@ -44,7 +44,7 @@ syn keyword   lionsKeyword     return
 syn keyword   lionsKeyword     yield
 syn keyword   lionsSuper       super
 syn keyword   lionsKeyword     where
-syn keyword   lionsKeyword     import package
+syn keyword   lionsKeyword     import package relmod
 syn keyword   lionsUnsafeKeyword unsafe
 syn keyword   lionsKeyword     use nextgroup=lionsModPath skipwhite skipempty
 " FIXME: Scoped impl's name is also fallen in this category
