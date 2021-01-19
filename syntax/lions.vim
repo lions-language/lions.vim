@@ -21,7 +21,7 @@ syn match     lionsRepeat /\<for\>/
 syn match     lionsKeyword /\%(\<impl\>.\+\)\@<=\<for\>/
 syn keyword   lionsRepeat in
 syn keyword   lionsTypedef type nextgroup=lionsIdentifier skipwhite skipempty
-syn keyword   lionsStructure struct enum nextgroup=lionsIdentifier skipwhite skipempty
+syn keyword   lionsStructure struct enum interface nextgroup=lionsIdentifier skipwhite skipempty
 syn keyword   lionsUnion union nextgroup=lionsIdentifier skipwhite skipempty contained
 syn match lionsUnionContextual /\<union\_s\+\%([^[:cntrl:][:space:][:punct:][:digit:]]\|_\)\%([^[:cntrl:][:punct:][:space:]]\|_\)*/ transparent contains=lionsUnion
 syn keyword   lionsOperator    as
